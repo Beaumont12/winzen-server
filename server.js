@@ -90,7 +90,7 @@ app.get('/orders', async (req, res) => {
 });
 
 // Product Count
-app.get('/product-count', async (req, res) => {
+app.get('/productCount', async (req, res) => {
   try {
     const productCount = await ProductCount.findOne();
     console.log('Fetched productCount:', productCount);
@@ -102,7 +102,7 @@ app.get('/product-count', async (req, res) => {
 });
 
 // Staff Count
-app.get('/staff-count', async (req, res) => {
+app.get('/staffCount', async (req, res) => {
   try {
     const staffCount = await StaffCount.findOne();
     console.log('Fetched staffCount:', staffCount);
