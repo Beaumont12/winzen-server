@@ -13,7 +13,7 @@ const HistorySchema = new mongoose.Schema({
   _id: String,
   customerName: String,
   discount: Number,
-  orderDateTime: Date,
+  orderDateTime: String,
   orderItems: {
     type: Map,
     of: OrderItemSchema

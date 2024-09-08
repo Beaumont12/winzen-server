@@ -13,7 +13,7 @@ const CanceledOrderSchema = new mongoose.Schema({
   _id: String,
   CustomerName: String,
   Discount: Number,
-  OrderDateTime: Date,
+  OrderDateTime: String,
   Orders: {
     type: Map,
     of: OrderItemSchema
