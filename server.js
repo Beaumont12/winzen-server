@@ -25,13 +25,18 @@ mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
+app.get('/', (req, res) => {
+    res.send('Server is running!');
+  });
 
 // Products
 app.get('/products', async (req, res) => {
   try {
     const products = await Product.find();
+    console.log('Fetched products:', products);
     res.json(products);
   } catch (error) {
+    console.error('Error fetching products:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -40,8 +45,10 @@ app.get('/products', async (req, res) => {
 app.get('/canceled', async (req, res) => {
   try {
     const canceled = await Canceled.find();
+    console.log('Fetched canceled:', canceled);
     res.json(canceled);
   } catch (error) {
+    console.error('Error fetching canceled:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -50,8 +57,10 @@ app.get('/canceled', async (req, res) => {
 app.get('/categories', async (req, res) => {
   try {
     const categories = await Category.find();
+    console.log('Fetched categories:', categories);
     res.json(categories);
   } catch (error) {
+    console.error('Error fetching categories:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -60,8 +69,10 @@ app.get('/categories', async (req, res) => {
 app.get('/history', async (req, res) => {
   try {
     const history = await History.find();
+    console.log('Fetched history:', history);
     res.json(history);
   } catch (error) {
+    console.error('Error fetching history:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -70,8 +81,10 @@ app.get('/history', async (req, res) => {
 app.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find();
+    console.log('Fetched orders:', orders);
     res.json(orders);
   } catch (error) {
+    console.error('Error fetching orders:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -80,8 +93,10 @@ app.get('/orders', async (req, res) => {
 app.get('/product-count', async (req, res) => {
   try {
     const productCount = await ProductCount.findOne();
+    console.log('Fetched productCount:', productCount);
     res.json(productCount);
   } catch (error) {
+    console.error('Error fetching productCount:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -90,8 +105,10 @@ app.get('/product-count', async (req, res) => {
 app.get('/staff-count', async (req, res) => {
   try {
     const staffCount = await StaffCount.findOne();
+    console.log('Fetched staffCount:', staffCount);
     res.json(staffCount);
   } catch (error) {
+    console.error('Error fetching staffCount:', error);
     res.status(500).json({ message: error.message });
   }
 });
@@ -99,9 +116,11 @@ app.get('/staff-count', async (req, res) => {
 // Staff
 app.get('/staff', async (req, res) => {
   try {
-    const staff = await Staff.find();
-    res.json(staff);
+    const staffs = await Staff.find();
+    console.log('Fetched staffs:', staffs);
+    res.json(staffs);
   } catch (error) {
+    console.error('Error fetching staffs:', error);
     res.status(500).json({ message: error.message });
   }
 });
