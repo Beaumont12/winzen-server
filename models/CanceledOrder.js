@@ -6,7 +6,7 @@ const OrderItemSchema = new mongoose.Schema({
   ProductName: String,
   Quantity: Number,
   Size: String
-}, { collection: 'canceled' });
+}, { _id: false });
 
 // Define the main CanceledOrder schema
 const CanceledOrderSchema = new mongoose.Schema({
@@ -22,6 +22,6 @@ const CanceledOrderSchema = new mongoose.Schema({
   StaffName: String,
   Subtotal: Number,
   Total: Number
-});
+}, { collection: 'canceled' });
 
 module.exports = mongoose.model('CanceledOrder', CanceledOrderSchema);
