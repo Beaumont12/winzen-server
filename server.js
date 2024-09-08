@@ -4,7 +4,7 @@ const cors = require('cors');
 
 // Import models
 const Product = require('./models/Product');
-const CanceledOrder = require('./models/CanceledOrder');
+const Canceled = require('./models/CanceledOrder');
 const Category = require('./models/Category');
 const History = require('./models/History');
 const Order = require('./models/Order');
@@ -44,7 +44,7 @@ app.get('/products', async (req, res) => {
 // Canceled Orders
 app.get('/canceled', async (req, res) => {
   try {
-    const canceled = await CanceledOrder.find();
+    const canceled = await Canceled.find();
     console.log('Fetched canceled:', canceled);
     if (canceled.length === 0) {
         console.log('No canceled orders found');
@@ -93,9 +93,9 @@ app.get('/orders', async (req, res) => {
 });
 
 // Product Count
-app.get('/product-count', async (req, res) => {
+app.get('/productCount', async (req, res) => {
     try {
-      const productCount = await ProductCount.findOne();
+      const productCount = await ProductCount.find();
       if (!productCount) {
         return res.status(404).json({ message: 'Product count not found' });
       }
@@ -107,9 +107,9 @@ app.get('/product-count', async (req, res) => {
   });
   
   // Staff Count
-  app.get('/staff-count', async (req, res) => {
+  app.get('/staffCount', async (req, res) => {
     try {
-      const staffCount = await StaffCount.findOne();
+      const staffCount = await StaffCount.find();
       if (!staffCount) {
         return res.status(404).json({ message: 'Staff count not found' });
       }
