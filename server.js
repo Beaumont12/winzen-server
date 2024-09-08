@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const winston = require('winston'); // Add winston for logging
 
 // Import models
 const Product = require('./models/Product');
@@ -12,6 +13,19 @@ const ProductCount = require('./models/ProductCount');
 const StaffCount = require('./models/StaffCount');
 const Staff = require('./models/Staff');
 
+// Configure logging
+const logger = winston.createLogger({
+  level: 'info',
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json()
+  ),
+  transports: [
+    new winston.transports.Console(),
+    new winston.transports.File({ filename: 'combined.log' })
+  ],
+});
+
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -20,24 +34,27 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb.net/?retryWrites=true&w=majority&appName=Winzen')
-  .then(() => console.log('MongoDB connected'))
-  .catch(err => console.error('MongoDB connection error:', err));
+mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb.net/?retryWrites=true&w=majority&appName=Winzen', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+  .then(() => logger.info('MongoDB connected'))
+  .catch(err => logger.error('MongoDB connection error:', err));
 
 // Routes
 app.get('/', (req, res) => {
-    res.send('Server is running!');
-  });
-  
+  res.send('Server is running!');
+});
+
 // Products
 app.get('/products', async (req, res) => {
   try {
     const products = await Product.find();
-    console.log('Fetched products:', products);
+    logger.info('Fetched products:', { products });
     res.json(products);
   } catch (error) {
-    console.error('Error fetching products:', error);
-    res.status(500).json({ message: error.message });
+    logger.error('Error fetching products:', { error });
+    res.status(500).json({ message: 'Error fetching products', error: error.message });
   }
 });
 
@@ -45,11 +62,11 @@ app.get('/products', async (req, res) => {
 app.get('/canceled', async (req, res) => {
   try {
     const canceled = await Canceled.find();
-    console.log('Fetched canceled:', canceled);
+    logger.info('Fetched canceled:', { canceled });
     res.json(canceled);
   } catch (error) {
-    console.error('Error fetching canceled:', error);
-    res.status(500).json({ message: error.message });
+    logger.error('Error fetching canceled:', { error });
+    res.status(500).json({ message: 'Error fetching canceled orders', error: error.message });
   }
 });
 
@@ -57,11 +74,11 @@ app.get('/canceled', async (req, res) => {
 app.get('/categories', async (req, res) => {
   try {
     const categories = await Category.find();
-    console.log('Fetched categories:', categories);
+    logger.info('Fetched categories:', { categories });
     res.json(categories);
   } catch (error) {
-    console.error('Error fetching categories:', error);
-    res.status(500).json({ message: error.message });
+    logger.error('Error fetching categories:', { error });
+    res.status(500).json({ message: 'Error fetching categories', error: error.message });
   }
 });
 
@@ -69,23 +86,23 @@ app.get('/categories', async (req, res) => {
 app.get('/history', async (req, res) => {
   try {
     const history = await History.find();
-    console.log('Fetched history:', history);
+    logger.info('Fetched history:', { history });
     res.json(history);
   } catch (error) {
-    console.error('Error fetching history:', error);
-    res.status(500).json({ message: error.message });
+    logger.error('Error fetching history:', { error });
+    res.status(500).json({ message: 'Error fetching history', error: error.message });
   }
 });
 
-// Order
+// Orders
 app.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find();
-    console.log('Fetched orders:', orders);
+    logger.info('Fetched orders:', { orders });
     res.json(orders);
   } catch (error) {
-    console.error('Error fetching orders:', error);
-    res.status(500).json({ message: error.message });
+    logger.error('Error fetching orders:', { error });
+    res.status(500).json({ message: 'Error fetching orders', error: error.message });
   }
 });
 
@@ -93,11 +110,11 @@ app.get('/orders', async (req, res) => {
 app.get('/product-count', async (req, res) => {
   try {
     const productCount = await ProductCount.findOne();
-    console.log('Fetched productCount:', productCount);
+    logger.info('Fetched productCount:', { productCount });
     res.json(productCount);
   } catch (error) {
-    console.error('Error fetching productCount:', error);
-    res.status(500).json({ message: error.message });
+    logger.error('Error fetching productCount:', { error });
+    res.status(500).json({ message: 'Error fetching product count', error: error.message });
   }
 });
 
@@ -105,11 +122,11 @@ app.get('/product-count', async (req, res) => {
 app.get('/staff-count', async (req, res) => {
   try {
     const staffCount = await StaffCount.findOne();
-    console.log('Fetched staffCount:', staffCount);
+    logger.info('Fetched staffCount:', { staffCount });
     res.json(staffCount);
   } catch (error) {
-    console.error('Error fetching staffCount:', error);
-    res.status(500).json({ message: error.message });
+    logger.error('Error fetching staffCount:', { error });
+    res.status(500).json({ message: 'Error fetching staff count', error: error.message });
   }
 });
 
@@ -117,14 +134,14 @@ app.get('/staff-count', async (req, res) => {
 app.get('/staff', async (req, res) => {
   try {
     const staffs = await Staff.find();
-    console.log('Fetched staffs:', staffs);
+    logger.info('Fetched staffs:', { staffs });
     res.json(staffs);
   } catch (error) {
-    console.error('Error fetching staffs:', error);
-    res.status(500).json({ message: error.message });
+    logger.error('Error fetching staffs:', { error });
+    res.status(500).json({ message: 'Error fetching staff members', error: error.message });
   }
 });
 
 app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
+  logger.info(`Server running on http://localhost:${port}`);
 });
