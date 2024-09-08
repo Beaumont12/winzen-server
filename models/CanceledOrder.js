@@ -6,7 +6,7 @@ const OrderItemSchema = new mongoose.Schema({
   ProductName: String,
   Quantity: Number,
   Size: String
-}, { _id: false });
+}, { collection: 'canceled' });
 
 // Define the main CanceledOrder schema
 const CanceledOrderSchema = new mongoose.Schema({

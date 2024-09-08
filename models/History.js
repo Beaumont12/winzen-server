@@ -23,6 +23,6 @@ const HistorySchema = new mongoose.Schema({
   staffName: String,
   subtotal: Number,
   total: Number
-});
+}, { collection: 'history' });
 
 module.exports = mongoose.model('History', HistorySchema);
