@@ -1,7 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
-const winston = require('winston'); // Add winston for logging
 
 // Import models
 const Product = require('./models/Product');
@@ -12,19 +11,6 @@ const Order = require('./models/Order');
 const ProductCount = require('./models/ProductCount');
 const StaffCount = require('./models/StaffCount');
 const Staff = require('./models/Staff');
-
-// Configure logging
-const logger = winston.createLogger({
-  level: 'info',
-  format: winston.format.combine(
-    winston.format.timestamp(),
-    winston.format.json()
-  ),
-  transports: [
-    new winston.transports.Console(),
-    new winston.transports.File({ filename: 'combined.log' })
-  ],
-});
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -38,8 +24,8 @@ mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
-  .then(() => logger.info('MongoDB connected'))
-  .catch(err => logger.error('MongoDB connection error:', err));
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
 app.get('/', (req, res) => {
@@ -50,10 +36,10 @@ app.get('/', (req, res) => {
 app.get('/products', async (req, res) => {
   try {
     const products = await Product.find();
-    logger.info('Fetched products:', { products });
+    console.log('Fetched products:', products);
     res.json(products);
   } catch (error) {
-    logger.error('Error fetching products:', { error });
+    console.error('Error fetching products:', error);
     res.status(500).json({ message: 'Error fetching products', error: error.message });
   }
 });
@@ -62,10 +48,10 @@ app.get('/products', async (req, res) => {
 app.get('/canceled', async (req, res) => {
   try {
     const canceled = await Canceled.find();
-    logger.info('Fetched canceled:', { canceled });
+    console.log('Fetched canceled:', canceled);
     res.json(canceled);
   } catch (error) {
-    logger.error('Error fetching canceled:', { error });
+    console.error('Error fetching canceled:', error);
     res.status(500).json({ message: 'Error fetching canceled orders', error: error.message });
   }
 });
@@ -74,10 +60,10 @@ app.get('/canceled', async (req, res) => {
 app.get('/categories', async (req, res) => {
   try {
     const categories = await Category.find();
-    logger.info('Fetched categories:', { categories });
+    console.log('Fetched categories:', categories);
     res.json(categories);
   } catch (error) {
-    logger.error('Error fetching categories:', { error });
+    console.error('Error fetching categories:', error);
     res.status(500).json({ message: 'Error fetching categories', error: error.message });
   }
 });
@@ -86,10 +72,10 @@ app.get('/categories', async (req, res) => {
 app.get('/history', async (req, res) => {
   try {
     const history = await History.find();
-    logger.info('Fetched history:', { history });
+    console.log('Fetched history:', history);
     res.json(history);
   } catch (error) {
-    logger.error('Error fetching history:', { error });
+    console.error('Error fetching history:', error);
     res.status(500).json({ message: 'Error fetching history', error: error.message });
   }
 });
@@ -98,10 +84,10 @@ app.get('/history', async (req, res) => {
 app.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find();
-    logger.info('Fetched orders:', { orders });
+    console.log('Fetched orders:', orders);
     res.json(orders);
   } catch (error) {
-    logger.error('Error fetching orders:', { error });
+    console.error('Error fetching orders:', error);
     res.status(500).json({ message: 'Error fetching orders', error: error.message });
   }
 });
@@ -110,10 +96,10 @@ app.get('/orders', async (req, res) => {
 app.get('/product-count', async (req, res) => {
   try {
     const productCount = await ProductCount.findOne();
-    logger.info('Fetched productCount:', { productCount });
+    console.log('Fetched productCount:', productCount);
     res.json(productCount);
   } catch (error) {
-    logger.error('Error fetching productCount:', { error });
+    console.error('Error fetching productCount:', error);
     res.status(500).json({ message: 'Error fetching product count', error: error.message });
   }
 });
@@ -122,10 +108,10 @@ app.get('/product-count', async (req, res) => {
 app.get('/staff-count', async (req, res) => {
   try {
     const staffCount = await StaffCount.findOne();
-    logger.info('Fetched staffCount:', { staffCount });
+    console.log('Fetched staffCount:', staffCount);
     res.json(staffCount);
   } catch (error) {
-    logger.error('Error fetching staffCount:', { error });
+    console.error('Error fetching staffCount:', error);
     res.status(500).json({ message: 'Error fetching staff count', error: error.message });
   }
 });
@@ -134,14 +120,14 @@ app.get('/staff-count', async (req, res) => {
 app.get('/staff', async (req, res) => {
   try {
     const staffs = await Staff.find();
-    logger.info('Fetched staffs:', { staffs });
+    console.log('Fetched staffs:', staffs);
     res.json(staffs);
   } catch (error) {
-    logger.error('Error fetching staffs:', { error });
+    console.error('Error fetching staffs:', error);
     res.status(500).json({ message: 'Error fetching staff members', error: error.message });
   }
 });
 
 app.listen(port, () => {
-  logger.info(`Server running on http://localhost:${port}`);
+  console.log(`Server running on http://localhost:${port}`);
 });
