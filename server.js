@@ -25,9 +25,6 @@ mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb
   .catch(err => console.error('MongoDB connection error:', err));
 
 // Routes
-app.get('/', (req, res) => {
-    res.send('Server is running!');
-  });
 
 // Products
 app.get('/products', async (req, res) => {
@@ -77,7 +74,7 @@ app.get('/history', async (req, res) => {
   }
 });
 
-// Orders
+// Order
 app.get('/orders', async (req, res) => {
   try {
     const orders = await Order.find();
