@@ -90,28 +90,32 @@ app.get('/orders', async (req, res) => {
 });
 
 // Product Count
-app.get('/productCount', async (req, res) => {
-  try {
-    const productCount = await ProductCount.findOne();
-    console.log('Fetched productCount:', productCount);
-    res.json(productCount);
-  } catch (error) {
-    console.error('Error fetching productCount:', error);
-    res.status(500).json({ message: 'Error fetching product count', error: error.message });
-  }
-});
-
-// Staff Count
-app.get('/staffCount', async (req, res) => {
-  try {
-    const staffCount = await StaffCount.findOne();
-    console.log('Fetched staffCount:', staffCount);
-    res.json(staffCount);
-  } catch (error) {
-    console.error('Error fetching staffCount:', error);
-    res.status(500).json({ message: 'Error fetching staff count', error: error.message });
-  }
-});
+app.get('/product-count', async (req, res) => {
+    try {
+      const productCount = await ProductCount.findOne({ _id: 'productCount' });
+      if (!productCount) {
+        return res.status(404).json({ message: 'Product count not found' });
+      }
+      res.json(productCount);
+    } catch (error) {
+      console.error('Error fetching product count:', error);
+      res.status(500).json({ message: 'Error fetching product count', error: error.message });
+    }
+  });
+  
+  // Staff Count
+  app.get('/staff-count', async (req, res) => {
+    try {
+      const staffCount = await StaffCount.findOne({ _id: 'staffCount' });
+      if (!staffCount) {
+        return res.status(404).json({ message: 'Staff count not found' });
+      }
+      res.json(staffCount);
+    } catch (error) {
+      console.error('Error fetching staff count:', error);
+      res.status(500).json({ message: 'Error fetching staff count', error: error.message });
+    }
+  });  
 
 // Staff
 app.get('/staff', async (req, res) => {
