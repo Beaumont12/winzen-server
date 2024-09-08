@@ -20,7 +20,7 @@ app.use(cors());
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb.net/?retryWrites=true&w=majority&appName=Winzen', {
+mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb.net/winzenDB?retryWrites=true&w=majority&appName=Winzen', {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
