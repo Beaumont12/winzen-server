@@ -4,7 +4,7 @@ const cors = require('cors');
 
 // Import models
 const Product = require('./models/Product');
-const Canceled = require('./models/Canceled');
+const Canceled = require('./models/CanceledOrder');
 const Category = require('./models/Category');
 const History = require('./models/History');
 const Order = require('./models/Order');
