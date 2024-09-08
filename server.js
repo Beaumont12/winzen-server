@@ -4,7 +4,7 @@ const cors = require('cors');
 
 // Import models
 const Product = require('./models/Product');
-const Canceled = require('./models/CanceledOrder');
+const CanceledOrder = require('./models/CanceledOrder');
 const Category = require('./models/Category');
 const History = require('./models/History');
 const Order = require('./models/Order');
@@ -44,9 +44,12 @@ app.get('/products', async (req, res) => {
 // Canceled Orders
 app.get('/canceled', async (req, res) => {
   try {
-    const canceledOrder = await Canceled.find({});
-    console.log('Fetched canceled:', canceledOrder);
-    res.json(canceledOrder);
+    const canceled = await CanceledOrder.find();
+    console.log('Fetched canceled:', canceled);
+    if (canceled.length === 0) {
+        console.log('No canceled orders found');
+      }
+    res.json(canceled);
   } catch (error) {
     console.error('Error fetching canceled:', error);
     res.status(500).json({ message: 'Error fetching canceled orders', error: error.message });
@@ -68,7 +71,7 @@ app.get('/categories', async (req, res) => {
 // History
 app.get('/history', async (req, res) => {
   try {
-    const history = await History.find({});
+    const history = await History.find();
     console.log('Fetched history:', history);
     res.json(history);
   } catch (error) {
