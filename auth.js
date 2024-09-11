@@ -1,4 +1,3 @@
-const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Staff = require('./models/Staff'); // Adjust the path as needed
 
@@ -17,6 +16,7 @@ const login = async (req, res) => {
   }
 
   try {
+    // Find staff by staff_id and email
     const staff = await Staff.findOne({ _id: staff_id, Email: email });
     console.log('Staff found:', staff);
 
@@ -25,11 +25,8 @@ const login = async (req, res) => {
       return res.status(401).json({ message: 'Invalid staff ID or email.' });
     }
 
-    console.log('Stored hashed password:', staff.Password); // Log stored password
-    const isMatch = await bcrypt.compare(password, staff.Password);
-    console.log('Password match result:', isMatch);
-
-    if (!isMatch) {
+    // Compare plaintext passwords
+    if (password !== staff.Password) {
       console.log('Invalid password');
       return res.status(401).json({ message: 'Invalid password.' });
     }
