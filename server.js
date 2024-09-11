@@ -30,6 +30,17 @@ app.get('/', (req, res) => {
   res.send('Server is running!');
 });
 
+app.post('/create-order', async (req, res) => {
+  try {
+    const newOrder = new Order(req.body);  // Create a new order from the request body
+    await newOrder.save();  // Save the order to the database
+    res.status(201).json({ message: 'Order created successfully', order: newOrder });
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ message: 'Failed to create order', error: error.message });
+  }
+});
+
 app.post('/login', login);
 
 // Products
