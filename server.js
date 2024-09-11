@@ -11,6 +11,7 @@ const Order = require('./models/Order');
 const ProductCount = require('./models/ProductCount');
 const StaffCount = require('./models/StaffCount');
 const Staff = require('./models/Staff');
+const { login } = require('./auth');
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -28,6 +29,8 @@ mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb
 app.get('/', (req, res) => {
   res.send('Server is running!');
 });
+
+app.post('/login', login);
 
 // Products
 app.get('/products', async (req, res) => {
