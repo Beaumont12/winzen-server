@@ -16,8 +16,13 @@ const login = async (req, res) => {
   }
 
   try {
+    // Log incoming request data for debugging
+    console.log('Incoming login request:', { staff_id, email });
+
     // Find staff by staff_id and email
     const staff = await Staff.findOne({ _id: staff_id, Email: email });
+    console.log('Staff found:', staff);
+
     if (!staff) {
       return res.status(401).json({ message: 'Invalid staff ID or email.' });
     }
