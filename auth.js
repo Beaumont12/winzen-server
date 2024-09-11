@@ -2,16 +2,6 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Staff = require('./models/Staff'); // Adjust the path as needed
 
-// Utility function to generate a token
-const generateToken = (staff) => {
-  return jwt.sign({ staffId: staff._id, role: staff.Role }, 'your_jwt_secret', { expiresIn: '1h' });
-};
-
-// Login function
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const Staff = require('./models/Staff'); // Adjust the path as needed
-
 const generateToken = (staff) => {
   return jwt.sign({ staffId: staff._id, role: staff.Role }, 'your_jwt_secret', { expiresIn: '1h' });
 };
@@ -62,11 +52,6 @@ const login = async (req, res) => {
     res.status(500).json({ message: 'Server error', error: error.message });
   }
 };
-
-module.exports = {
-  login,
-};
-
 
 module.exports = {
   login,
