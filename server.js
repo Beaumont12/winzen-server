@@ -32,10 +32,14 @@ app.get('/', (req, res) => {
 
 app.post('/create-order', async (req, res) => {
   try {
-    const newOrder = new Order(req.body);  // Create a new order from the request body
-    await newOrder.save();  // Save the order to the database
+    const newOrder = new Order(req.body);
+    await newOrder.save();
     res.status(201).json({ message: 'Order created successfully', order: newOrder });
   } catch (error) {
+    if (error.name === 'ValidationError') {
+      console.error('Validation Error:', error.errors);
+      return res.status(400).json({ message: 'Validation error', error: error.errors });
+    }
     console.error('Error creating order:', error);
     res.status(500).json({ message: 'Failed to create order', error: error.message });
   }
