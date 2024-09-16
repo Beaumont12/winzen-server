@@ -31,6 +31,8 @@ app.get('/', (req, res) => {
 });
 
 app.post('/create-order', async (req, res) => {
+  console.log('Received Order Payload:', req.body);
+  
   try {
     const newOrder = new Order(req.body);
     await newOrder.save();
