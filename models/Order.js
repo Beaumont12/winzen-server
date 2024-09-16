@@ -5,7 +5,8 @@ const OrderItemSchema = new mongoose.Schema({
   Price: Number,
   ProductName: String,
   Quantity: Number,
-  Size: String
+  Size: String,
+  Variation: String,
 }, { _id: false });
 
 // Define the main Order schema
