@@ -24,7 +24,7 @@ const OrderSchema = new mongoose.Schema({
   StaffName: String,
   Subtotal: Number,
   Total: Number
-} { collection: 'orders' }); 
+}, { collection: 'orders' }); 
 
 // Create and export the model
 module.exports = mongoose.model('Order', OrderSchema);
