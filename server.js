@@ -1,7 +1,9 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
+const job = require('./cron')
 
+job.start();
 // Import models
 const Product = require('./models/Product');
 const Canceled = require('./models/CanceledOrder');
@@ -27,7 +29,7 @@ mongoose.connect('mongodb+srv://relginpaloma12:119789090256@winzen.sb5de.mongodb
 
 // Routes
 app.get('/', (req, res) => {
-  res.send('Server is running!');
+  res.send('Winzen Server is running!');
 });
 
 app.post('/create-order', async (req, res) => {
