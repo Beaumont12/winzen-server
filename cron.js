@@ -2,7 +2,7 @@ const cron = require('cron');
 const https = require('https');
 
 // Define the backend URL
-const backendUrl = 'https://your-backend-api-endpoint';
+const backendUrl = 'https://winzen-server-1.onrender.com/';
 
 // Define a cron job to hit the endpoint every 14 minutes
 const job = new cron.CronJob('*/14 * * * *', function () {
